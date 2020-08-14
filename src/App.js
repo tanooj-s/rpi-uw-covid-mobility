@@ -8,9 +8,10 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      search_term: "", // will be a county name
+      search_term: "",
       response_data: "",
-      out_data: ""
+      out_data: "",
+      submitted: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -7134,6 +7135,8 @@ class App extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     //this.setState({ response_data: [] })
+    this.setState({ submitted: 1 })
+    this.getPlotData(this.state.search_term)
     //this.getResponse("http://127.0.0.1:5000/", this.state)
 
   }
@@ -7163,75 +7166,83 @@ class App extends React.Component {
   }
 
   render () {
-    if (this.state.search_term === "") {
-      var output = <p>Please enter a state name to see predicted fatalities due to COVID.</p>
-    } else {
-      // hack, idk why this.state.response_data is still a string and needs to be parsed again
-      //var response_string = this.state.response_data
-      //var out_data = JSON.parse(response_string).record_data
-      var out_data = this.getPlotData(this.state.search_term)
-      //var metadata = JSON.parse(response_string).metadata
-      var prediction_date = "" // use this to change line color on plot, will need to get it as a percentage of total dates
-      for (var i=0;i<out_data.length;i++) {
-        if (out_data[i].Actual == "Prediction") {
-          prediction_date = out_data[i].Date
-          break
-        }
-      }
-      console.log(prediction_date)
-      var line_percent = i*100/(out_data.length) // change color of line at this percentage
-      console.log(line_percent)
 
-      console.log(out_data)
-      var output =
-        <div className = "output">
-          <p>Predicted fatalities for {this.state.search_term} start from <strong>{prediction_date}</strong> (Y-M-D)</p>
-          <div className="plot-container">
-            <div className="plot-legend">
-              <svg width="1500" height="75">
-                <circle cx="1115" cy="70" r="5" stroke="#0d47a1" fill="#0d47a1" />
-                <text x="1145" y="75" class="small">Actual</text>
-                <circle cx="1320" cy="70" r="5" stroke="#eb3710" fill="#eb3710" />
-                <text x="1350" y="75" class="small">Predicted</text>
-              </svg>
+    var valid_states = ["New York", "New Jersey", "California", "Texas", "Massachusetts", "Florida", "Illinois", "Pennsylvania", "Connecticut", "Michigan", "Louisiana", "Georgia", "Arizona", "Ohio", "Maryland", "Iowa", "Kentucky",
+                        "Indiana", "Virginia", "North Carolina", "South Carolina", "Mississippi", "Colorado", "Alabama", "Missouri", "Washington", "Minnesota", "Tennessee", "Rhode Island", "Wisconsin", "Nevada", "Oklahoma"]
+    if (this.state.submitted === 0) {
+      var output = <p>Please enter a (US) state name to see predicted fatalities due to COVID.</p>
+    }
+    else if (this.state.submitted === 1) {
+      if (valid_states.includes(this.state.search_term)) {
+            var out_data = this.getPlotData(this.state.search_term)
+            //var metadata = JSON.parse(response_string).metadata
+            var prediction_date = "" // use this to change line color on plot, will need to get it as a percentage of total dates
+            for (var i=0;i<out_data.length;i++) {
+                  if (out_data[i].Actual == "Prediction") {
+                        prediction_date = out_data[i].Date
+                        break
+                  }
+            }
+            var line_percent = i*100/(out_data.length) // change color of line at this percentage
+            var output =
+            <div className = "output">
+                <p>Predicted fatalities for {this.state.search_term} start from <strong>{prediction_date}</strong> (Y-M-D)</p>
+                <div className="plot-container">
+                  <div className="plot-legend">
+                    <svg width="1500" height="75">
+                      <circle cx="1115" cy="70" r="5" stroke="#0d47a1" fill="#0d47a1" />
+                      <text x="1145" y="75" class="small">Actual</text>
+                      <circle cx="1320" cy="70" r="5" stroke="#eb3710" fill="#eb3710" />
+                      <text x="1350" y="75" class="small">Predicted</text>
+                    </svg>
+                  </div>
+                  <LineChart
+                    width = {1500}
+                    height = {600}
+                    data = {out_data}
+                    margin = {{ top: 5, right: 20, left: 10, bottom: 5 }}
+                  >
+                    <defs>
+                      <linearGradient id="linecolor" x1="0%" y1="0" x2="100%" y2="0">
+                        <stop offset="0%" stopColor="#0d47a1" />
+                        <stop offset={`${line_percent}%`} stopColor="#0d47a1"/>
+                        <stop offset={`${line_percent}%`} stopColor="#eb3710"/>
+                        <stop offset="100%" stopColor="#eb3710"/>
+                      </linearGradient>
+                    </defs>
+                    <YAxis domain={[0, 40000]}/>
+                    <XAxis dataKey="Date" />
+                    <Tooltip />
+                    <CartesianGrid stroke="#f5f5f5" />
+                    <Line
+                      type="monotone"
+                      dataKey="CumFatality"
+                      stroke="url(#linecolor)"
+                      yAxisId={0}
+                      dot={false}
+                      strokeWidth={4}
+                    />
+                  </LineChart>
+                </div>
             </div>
-            <LineChart
-              width = {1500}
-              height = {600}
-              data = {out_data}
-              margin = {{ top: 5, right: 20, left: 10, bottom: 5 }}
-            >
-              <defs>
-                <linearGradient id="linecolor" x1="0%" y1="0" x2="100%" y2="0">
-                  <stop offset="0%" stopColor="#0d47a1" />
-                  <stop offset={`${line_percent}%`} stopColor="#0d47a1"/>
-                  <stop offset={`${line_percent}%`} stopColor="#eb3710"/>
-                  <stop offset="100%" stopColor="#eb3710"/>
-                </linearGradient>
-              </defs>
-              <YAxis domain={[0, 40000]}/>
-              <XAxis dataKey="Date" />
-              <Tooltip />
-              <CartesianGrid stroke="#f5f5f5" />
-              <Line
-                type="monotone"
-                dataKey="CumFatality"
-                stroke="url(#linecolor)"
-                yAxisId={0}
-                dot={false}
-                strokeWidth={4}
-              />
-            </LineChart>
-          </div>
-        </div>
+          }
+      else {
+            var valid_states_string = valid_states.join(', ')
+            var output = <p>Please enter a valid state, i.e. one of {valid_states_string}</p>
+        }
     }
     return (
       <div className="App">
         <h3>Mobility-informed collision model for Covid transmission</h3>
         <p>See <a href="https://github.com/reichlab/covid19-forecast-hub/blob/master/data-processed/RPI-UW-Mob-Collision/metadata-RPI-UW-Mob-Collision.txt">github page</a> for details.</p>
         <div className="searchform">
-          <form onSubmit={this.handleSubmit} encType="multipart/form-data">
-            <select value={this.state.search_term} onChange={this.handleChange}>
+            <form onSubmit={this.handleSubmit} encType="multipart/form-data">
+                  <input type="text" name="search_term" value={this.state.search_term} placeholder="Enter state name" onChange={this.handleChange} onClick={(e) => this.setState({ submitted: 0 })}/>
+                  <button>Search</button>
+            </form>
+
+          {/*<form onSubmit={this.handleSubmit} encType="multipart/form-data">
+            <select onChange={this.handleChange}>
               <option value="" selected disabled hidden>Choose state</option>
               <option value="New York" onClick={(e) => this.setState({ search_term: "New York" })}>New York</option>
               <option value="New Jersey" onClick={(e) => this.setState({ search_term: "New Jersey" })}>New Jersey</option>
@@ -7266,7 +7277,7 @@ class App extends React.Component {
               <option value="Oklahoma" onClick={(e) => this.setState({ search_term: "Oklahoma" })}>Oklahoma</option>
               <option value="Kentucky" onClick={(e) => this.setState({ search_term: "Kentucky" })}>Kentucky</option>
             </select>
-          </form>
+          </form>*/}
         </div>
         <div className="output-container">
           {output}
