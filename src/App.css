@@ -76,6 +76,10 @@
   display: inline-block;
 }
 
+.recharts-tooltip-wrapper {
+  font-size: 9px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
