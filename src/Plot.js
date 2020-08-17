@@ -33,7 +33,7 @@ class Plot extends React.Component {
       <div className="plot-container">
         <p className="plot-title">{this.props.name}</p>
         <LineChart
-          width = {500}
+          width = {400}
           height = {200}
           data = {this.props.data}
           margin = {{ top: 5, right: 20, left: 10, bottom: 5 }}
@@ -51,8 +51,8 @@ class Plot extends React.Component {
               <stop offset="100%" stopColor="#eb3710"/>
             </linearGradient>
           </defs>
-          <YAxis domain={[0, y_scaler]} />
-          <XAxis dataKey="Date" />
+          <YAxis domain={[0, y_scaler]} tick={{fontSize: 8}}/>
+          <XAxis dataKey="Date" tick={{fontSize: 8}}/>
           <Tooltip />
           <CartesianGrid stroke="#f7f7f7" />
           <Line
