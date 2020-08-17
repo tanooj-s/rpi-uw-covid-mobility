@@ -33,8 +33,8 @@ class Plot extends React.Component {
       <div className="plot-container">
         <p className="plot-title">{this.props.name}</p>
         <LineChart
-          width = {400}
-          height = {200}
+          width = {320}
+          height = {160}
           data = {this.props.data}
           margin = {{ top: 5, right: 20, left: 10, bottom: 5 }}
           label = {this.props.name}

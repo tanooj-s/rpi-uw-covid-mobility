@@ -19,7 +19,6 @@
   min-height: 100vh;
   text-align: center;
   flex-direction: column;
-
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -28,26 +27,31 @@
   color: #61dafb;
 }
 
-
-.settings-form {}
+.settings-form {
+  text-align: center;
+  display: inline-block;
+  font-size: 12px;
+}
 
 .output-container {
   text-align: center;
   display: inline-block;
 }
 
-
-.output{
+.output {
   text-align: center;
   display: inline-block;
+  font-size: 12px;
 }
 
 .plot-title {
   text-align: center;
+  font-size: 11px;
 }
 
 .plot-legend {
   display: inline-block;
+  font-size: 11px;
 }
 .plot-container {
   display: inline-block;
