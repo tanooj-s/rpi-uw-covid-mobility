@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: inline-block;
 }
 
 .App-logo {
@@ -28,19 +29,22 @@
 }
 
 
-.searchform {}
+.settings-form {}
 
-.output-container{}
+.output-container {
+  text-align: center;
+  display: inline-block;
+}
+
 
 .output{
   text-align: center;
+  display: inline-block;
 }
 
-.datatable-container {
-  float: left;
-  width: 400px;
+.plot-title {
+  text-align: center;
 }
-
 
 .plot-legend {
   display: inline-block;
