@@ -6288,13 +6288,14 @@ class App extends React.Component {
 
 
       return (
-            <div className="App">
+          <div className="App">
+            <div className="upper-bit">
 
-
-              <h3>Mobility-informed collision model for Covid transmission</h3>
-              <p>See <a href="https://github.com/reichlab/covid19-forecast-hub/blob/master/data-processed/RPI-UW-Mob-Collision/metadata-RPI-UW-Mob-Collision.txt">github page</a> and <a href="https://www.medrxiv.org/content/10.1101/2020.07.25.20162016v1">paper</a> for details.</p>
-              <p>Predicted values start from 8/16/2020</p>
-                    <div className="settings-form">
+                  <h3>Mobility-informed collision model for Covid transmission</h3>
+                  <p>See <a href="https://github.com/reichlab/covid19-forecast-hub/blob/master/data-processed/RPI-UW-Mob-Collision/metadata-RPI-UW-Mob-Collision.txt">github page</a> and <a href="https://www.medrxiv.org/content/10.1101/2020.07.25.20162016v1">paper</a> for details.</p>
+                  <p className="notes">Predicted values start from 8/16/2020, predictions are for 4 weeks.</p>
+                  {/*<p className="notes">Opening schools and implmenting shutdowns will affect the relative mobility values. A mask mandate will reduce the infection rate (&beta;) in the model.</p>*/}
+                  <div className="settings-form">
                         <form onSubmit={this.handleSubmit} encType="multipart/form-data">
                               <label>
                                     <input type="radio" value="0" checked = {this.state.settings === 0} onClick={(e) => this.setState({ settings: 0 })} />
@@ -6326,11 +6327,7 @@ class App extends React.Component {
                               </label>
                         </form>
                     </div>
-
-
-
-            <div className="output-container">
-                  <div className="plot-legend">
+                    <div className="plot-legend">
                       <svg width="600" height="25">
                         <circle cx="80" cy="15" r="3" stroke="#0d47a1" fill="#0d47a1" />
                         <text x="100" y="20" class="small">Actual</text>
@@ -6338,9 +6335,14 @@ class App extends React.Component {
                         <text x="260" y="20" class="small">Prediction (stay put)</text>
                         <circle cx="420" cy="15" r="3" stroke="#eb3710" fill="#eb3710" />
                         <text x="440" y="20" class="small">Prediction with policy</text>
-
                       </svg>
-                  </div>
+                    </div>
+              </div>
+
+
+
+            <div className="output-container">
+
                   <Grid container spacing={4} alignContent='center' alignItems='center' justify='center'>
                         {valid_states.map((state_name) => (
                               <Grid item key={state_name}>
