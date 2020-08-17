@@ -18,12 +18,8 @@ class App extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.getResponse = this.getResponse.bind(this)
     this.getPlotData = this.getPlotData.bind(this)
     //this.importCsvFile = this.importCsvFile.bind(this)
-    //this.loadData = this.loadData.bind(this)
-
-    //this.componentDidMount = this.componentDidMount.bind(this)
 
     this.records = Papa.parse(`
     Statename, FIPS, Date, Days_from_Ref, RelativeMobility, CumulativeMobility, Actual-Predict, FatalityRA, CumFatality_Stayput, SchoolOpenNow1%,SchoolOpenNow2%,MaskMandate25%, MaskMandate50%, Shutdown1week, Shutdown2week, Population
@@ -6167,6 +6163,7 @@ class App extends React.Component {
       US,0,2020-10-3,186,,,Prediction,3996.95264156105,278071.56550419,313403.541643153,369516.205903853,227740.413225076,218955.864879628,261105.70866776,253622.261642258,0
       `)
 
+
       this.state_records = {}
       for (var i=0;i<this.records.data.length;i++) {
             var this_state = this.records.data[i][0].trim()
@@ -6210,26 +6207,7 @@ class App extends React.Component {
             }
       }
   }
-
-
-
-
-
-  /*
-        this.state_records[this_state].push({
-          'FIPS': records.data[i][1],
-          'Date': records.data[i][2],
-          'Days_from_Ref': records.data[i][3],
-          'RelativeMobility': Math.round(parseFloat(records.data[i][4])),
-          'CumulativeMobility': Math.round(parseFloat(records.data[i][5])),
-          'Actual': records.data[i][6],
-          'FatalityRA': records.data[i][7],
-          'CumFatality': Math.round(parseFloat(records.data[i][8])),
-          'Population': records.data[i][9],
-        })
-      }
-
-
+/*
   importCsvFile(filePath) {
       const reader = new FileReader()
       return reader.readAsDataURL(filePath)
@@ -6254,15 +6232,12 @@ class App extends React.Component {
     this.getPlotData(this.state.search_term)
     //this.getResponse("http://127.0.0.1:5000/", this.state)
   }
-  //componentDidMount(e) {
-  //  this.getResponse()
-  //}
+
   getPlotData(search_term) {
     return this.state_records[search_term]
   }
 
-
-
+  /*
   async getResponse(url, data) {
     var out_data = []
     var decoder = new TextDecoder()
@@ -6279,18 +6254,15 @@ class App extends React.Component {
     .then(() => this.setState({ response_data: JSON.parse(out_data[0]) }))
     .catch(error => console.log(error))
   }
+  */
 
   render () {
-      //this.loadData()
       var valid_states = ["New York", "New Jersey", "California", "Texas", "Massachusetts", "Florida", "Illinois", "Pennsylvania", "Connecticut", "Michigan", "Louisiana", "Georgia", "Arizona", "Ohio", "Maryland", "Iowa", "Kentucky",
                         "Indiana", "Virginia", "North Carolina", "South Carolina", "Mississippi", "Colorado", "Alabama", "Missouri", "Washington", "Minnesota", "Tennessee", "Rhode Island", "Wisconsin", "Nevada", "Oklahoma"]
-      //var metadata = JSON.parse(response_string).metadata
-
 
       return (
-          <div className="App">
+      <div className="App">
             <div className="upper-bit">
-
                   <h3>Mobility-informed collision model for Covid transmission</h3>
                   <p>See <a href="https://github.com/reichlab/covid19-forecast-hub/blob/master/data-processed/RPI-UW-Mob-Collision/metadata-RPI-UW-Mob-Collision.txt">github page</a> and <a href="https://www.medrxiv.org/content/10.1101/2020.07.25.20162016v1">paper</a> for details.</p>
                   <p className="notes">Predicted values start from 8/16/2020, predictions are for 4 weeks.</p>
@@ -6326,23 +6298,19 @@ class App extends React.Component {
                                     Shutdown for 2 weeks
                               </label>
                         </form>
-                    </div>
-                    <div className="plot-legend">
-                      <svg width="600" height="25">
-                        <circle cx="80" cy="15" r="3" stroke="#0d47a1" fill="#0d47a1" />
-                        <text x="100" y="20" class="small">Actual</text>
-                        <circle cx="240" cy="15" r="3" stroke="#4aba53" fill="#4aba53" />
-                        <text x="260" y="20" class="small">Prediction (stay put)</text>
-                        <circle cx="420" cy="15" r="3" stroke="#eb3710" fill="#eb3710" />
-                        <text x="440" y="20" class="small">Prediction with policy</text>
-                      </svg>
-                    </div>
-              </div>
-
-
-
+                  </div>
+                  <div className="plot-legend">
+                        <svg width="600" height="25">
+                              <circle cx="80" cy="15" r="3" stroke="#0d47a1" fill="#0d47a1" />
+                              <text x="100" y="20" class="small">Actual</text>
+                              <circle cx="240" cy="15" r="3" stroke="#4aba53" fill="#4aba53" />
+                              <text x="260" y="20" class="small">Prediction (stay put)</text>
+                              <circle cx="420" cy="15" r="3" stroke="#eb3710" fill="#eb3710" />
+                              <text x="440" y="20" class="small">Prediction with policy</text>
+                        </svg>
+                  </div>
+            </div>
             <div className="output-container">
-
                   <Grid container spacing={4} alignContent='center' alignItems='center' justify='center'>
                         {valid_states.map((state_name) => (
                               <Grid item key={state_name}>
@@ -6351,7 +6319,6 @@ class App extends React.Component {
                         ))}
                   </Grid>
             </div>
-
       </div>
     )
   }

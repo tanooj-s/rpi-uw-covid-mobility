@@ -7,7 +7,6 @@ class Plot extends React.Component {
   constructor(props) {
     super(props)
     var prediction_date = "" // use this to change line color on plot, will need to get it as a percentage of total dates
-    let collect_prediction = 0 // switch to get date predictions start from // to scale y axis of plot
     for (var i=0; i<this.props.data.length; i++) {
       if (this.props.data[i].Actual == "Prediction") {
         prediction_date = this.props.data[i].Date
@@ -65,18 +64,16 @@ class Plot extends React.Component {
           />
           <Line
               type="monotone"
-              dataKey={data_key} // should be this.props.settings
+              dataKey={data_key} // user selected
               stroke="url(#line2color)"
               yAxisId={0}
               dot={false}
               strokeWidth={(this.props.settings === 0) ? 0 : 2}
           />
-
-        }
         </LineChart>
       </div>
     )
-      }
+  }
 }
 
 export default Plot
