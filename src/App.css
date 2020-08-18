@@ -48,6 +48,10 @@
 
 }
 
+.settings-blurb {
+  font-size: 11px;
+}
+
 .plot-legend {
   display: inline-block;
   font-size: 11px;
