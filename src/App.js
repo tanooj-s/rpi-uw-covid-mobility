@@ -6276,19 +6276,19 @@ class App extends React.Component {
                               </label>
                               <label>
                                     <input type="radio" value="1" checked = {this.state.settings === 1} onClick={(e) => this.setState({ settings: 1 })} />
-                                    Schools open at 1%
+                                    Schools open 1
                               </label>
                               <label>
                                     <input type="radio" value="2" checked = {this.state.settings === 2} onClick={(e) => this.setState({ settings: 2 })} />
-                                    Schools open at 2%
+                                    Schools open 2
                               </label>
                               <label>
                                     <input type="radio" value="3" checked = {this.state.settings === 3} onClick={(e) => this.setState({ settings: 3 })} />
-                                    Mask mandate 25%
+                                    Mask mandate 25
                               </label>
                               <label>
                                     <input type="radio" value="4" checked = {this.state.settings === 4} onClick={(e) => this.setState({ settings: 4 })} />
-                                    Mask mandate 50%
+                                    Mask mandate 50
                               </label>
                               <label>
                                     <input type="radio" value="5" checked = {this.state.settings === 5} onClick={(e) => this.setState({ settings: 5 })} />
@@ -6304,17 +6304,17 @@ class App extends React.Component {
                         {(this.state.settings === 0) ?
                               (<p></p>) : (
                          (this.state.settings === 1) ?
-                              (<p>School open (recovery rate lowered by 0.01)</p>) : (
+                              (<p>School open - recovery rate (&gamma;) lowered by 0.01</p>) : (
                          (this.state.settings === 2) ?
-                              (<p>School open (recovery rate lowered by 0.02)</p>) : (
+                              (<p>School open - recovery rate (&gamma;) lowered by 0.02</p>) : (
                          (this.state.settings === 3) ?
-                              (<p>Mask mandate (infection rate drops by 25%)</p>) : (
+                              (<p>Mask mandate - infection rate (&beta;) drops by 25%</p>) : (
                          (this.state.settings === 4) ?
-                              (<p>Mask mandate (infection rate drops by 50%)</p>) : (
+                              (<p>Mask mandate - infection rate (&beta;) drops by 50%</p>) : (
                          (this.state.settings === 5) ?
-                              (<p>Shutdown for 1 week (mobility equals to 50% of January baseline)</p>) : (
+                              (<p>Shutdown for 1 week - mobility equals to 50% of January baseline</p>) : (
                          (this.state.settings === 6) ?
-                              (<p>Shutdown for 2 weeks (mobility equals to 50% of January baseline)</p>) : (<p></p>)
+                              (<p>Shutdown for 2 weeks - mobility equals to 50% of January baseline</p>) : (<p></p>)
                         ))))))}
                   </div>
                   <div className="plot-legend">
