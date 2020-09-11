@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import moment from 'moment';
 
 
 class Plot extends React.Component {
@@ -19,8 +20,11 @@ class Plot extends React.Component {
 
   render() {
     let options = ["CumFatality_Stayput","SchoolOpenNow1","SchoolOpenNow2","MaskMandate25","MaskMandate50","Shutdown1week","Shutdown2week"]
-    let data_key = options[this.props.settings]
+    let user_selection = options[this.props.settings]
     let last_index = this.props.data.length - 1
+
+    let first_date = this.props.data[0].Date_UTC
+    let last_date = this.props.data[last_index].Date_UTC
     let max_value = 0
     for (var i = 0; i<options.length;i++) {
       if (max_value < this.props.data[last_index][options[i]]) {
@@ -51,7 +55,14 @@ class Plot extends React.Component {
             </linearGradient>
           </defs>
           <YAxis domain={[0, y_scaler]} tick={{fontSize: 8}}/>
-          <XAxis dataKey="Date" tick={{fontSize: 8}}/>
+          <XAxis dataKey="Date" tick={{fontSize: 8}} />
+          {/*<XAxis
+            dataKey="Date_UTC"
+            type="number"
+            domain={[first_date, last_date]} // last_date - (2629743*3)
+            tickFormatter={v => moment.utc(v).format("MM-DD-YYYY")}
+            tick={{fontSize: 8}}
+          />*/}
           <Tooltip />
           <CartesianGrid stroke="#f7f7f7" />
           <Line
@@ -64,7 +75,7 @@ class Plot extends React.Component {
           />
           <Line
               type="monotone"
-              dataKey={data_key} // user selected
+              dataKey={user_selection}
               stroke="url(#line2color)"
               yAxisId={0}
               dot={false}

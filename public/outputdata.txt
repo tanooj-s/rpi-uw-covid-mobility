@@ -1,4 +1,3 @@
-Statename,FIPS,Date,Days_from_Ref,RelativeMobility,CumulativeMobility,Actual-Predict,FatalityRA,CumFatality_Stayput,SchoolOpenNow1%,SchoolOpenNow2%,MaskMandate25%,MaskMandate50%,Shutdown1week,Shutdown2week,Population
 New York,36,2020-1-22,-67,,,Actual,,,,,,,,,26161672
 Capital District,36001,2020-1-22,-72,,,Actual,,,,,,,,,305506
 US,0,2020-1-22,-72,,,Actual,0,0,,,,,,,0
